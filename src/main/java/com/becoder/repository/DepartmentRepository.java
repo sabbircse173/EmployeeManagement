@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.becoder.entity.Department;
 
-public interface DepartmentRepo extends JpaRepository<Department, Integer>{
+public interface DepartmentRepository extends JpaRepository<Department, Integer>{
 
 }

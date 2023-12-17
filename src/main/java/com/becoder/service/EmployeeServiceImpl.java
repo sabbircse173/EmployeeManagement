@@ -1,42 +1,47 @@
 package com.becoder.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.becoder.entity.Employee;
-import com.becoder.repository.EmployeeRepo;
+import com.becoder.repository.EmployeeRepository;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
 
 	@Autowired
-	private EmployeeRepo emprepo;
+	private EmployeeRepository employeeRepository;
 	
 	@Override
 	public Employee saveEmployee(Employee emp) {
-		return emprepo.save(emp);
+		return employeeRepository.save(emp);
 	}
 
 	@Override
 	public List<Employee> getAllEmployee() {
-		return emprepo.findAll();
+		return employeeRepository.findAll();
 	}
 
 	@Override
 	public Employee getEmployeeById(int id) {
-		return emprepo.findById(id).get();
+		Optional<Employee> employeeOptional = employeeRepository.findById(id);
+		if(employeeOptional.isPresent()) {
+			return employeeOptional.get();
+		}
+		return null;
 	}
 
 	@Override
-	public String deleteEmployeeById(int id) {
-		Employee emp = emprepo.findById(id).get();
-		if(emp != null) {
-			emprepo.delete(emp);
-			System.out.println("Deleted successfully");
+	public boolean deleteEmployeeById(int id) {
+		Optional<Employee> employeeOptional = employeeRepository.findById(id);
+		if(employeeOptional.isPresent()) {
+			employeeRepository.deleteById(id);
+			return true;
 		}
-		return "sorry, something went wrong, can't be deleted";
+		return false;
 	}
 
 }

@@ -8,5 +8,5 @@ public interface EmployeeService {
 	public Employee saveEmployee(Employee emp);
 	public List<Employee> getAllEmployee();
 	public Employee getEmployeeById(int id);
-	public String deleteEmployeeById(int id);
+	public boolean deleteEmployeeById(int id);
 }

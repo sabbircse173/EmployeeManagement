@@ -18,71 +18,76 @@ import com.becoder.service.EmployeeService;
 @Controller
 public class HomeControllers {
 	@Autowired
-	private DepartmentService deptServ;
+	private DepartmentService departmentService;
 	
 	@Autowired
-	private EmployeeService empServ;
+	private EmployeeService employeeService;
 	
 	@ModelAttribute
 	public void depts(Model m) {
-		List<Department> depts = deptServ.getAllDepartment();
+		List<Department> depts = departmentService.getAllDepartment();
 		m.addAttribute("depts", depts);
 	}
 	
 	@GetMapping("/")
 	public String Home() {
-		return "home.html";
+		return "home";
 	}
+	
 	@GetMapping("/addDept")
 	public String addDept() {
-		return "add_dept.html";
+		return "add_dept";
 	}
 	
 	@GetMapping("/addEmp")
 	public String addEmp(Model m) {
-		List<Department> depts = deptServ.getAllDepartment();
-		m.addAttribute("depts", depts);
-		return "add_emp.html";
+		return "add_emp";
 	}
 	
 	@GetMapping("/empList")
 	public String empList(Model m) {
-		List<Employee> empList = empServ.getAllEmployee();
+		List<Employee> empList = employeeService.getAllEmployee();
 		m.addAttribute("empList", empList);
-		return "emp_list.html";
+		return "emp_list";
 	}
 	
 	@GetMapping("/deptList")
 	public String deptList(Model m) {
-		List<Department> deptList = deptServ.getAllDepartment();
+		List<Department> deptList = departmentService.getAllDepartment();
 		m.addAttribute("deptList", deptList);
-		return "dept_list.html";
+		return "dept_list";
 	}
 	
 	@PostMapping("/saveDept")
 	public String saveDept(@ModelAttribute Department dept, Model m) {
-		deptServ.SaveDepartment(dept);
-		m.addAttribute("msg", "Successfully Added");
-		return "redirect:/deptList";
+		departmentService.saveDepartment(dept);
+		return "redirect:/addDept";
 	}
 	
 	
 	@GetMapping("/editDept/{id}")
 	public String editDeptById(@PathVariable int id, Model m) {
-		Department dept = deptServ.getDepartmentById(id);
-		m.addAttribute("dept", dept);
-		return "edit_dept.html";
+		Department dept = departmentService.getDepartmentById(id);
+		if(dept != null) {
+			m.addAttribute("dept", dept);
+			return "edit_dept";
+		}
+		m.addAttribute("msg", "Sorry Department doesn't exist");
+		return "error_page";
 	}
 	
 	@GetMapping("/deleteDept/{id}")
 	public String deleteDeptById(@PathVariable int id, Model m) {
-		deptServ.DeleteDeptById(id);
-		return "redirect:/deptList";
+		if(departmentService.deleteDepartmentById(id)) {
+			return "redirect:/deptList";
+		}
+		m.addAttribute("msg", "Already Deleted");
+		return "error_page";
 	}
 	
 	@PostMapping("/editDept/updateDept")
 	public String updateDept(@ModelAttribute Department dept) {
-		deptServ.SaveDepartment(dept);
+		departmentService.saveDepartment(dept);
 		return "redirect:/deptList";
 	}
 	
@@ -90,27 +95,33 @@ public class HomeControllers {
 	
 	
 	@PostMapping("/saveEmp")
-	public String saveEmp(@ModelAttribute Employee emp, Model m) {
-		empServ.saveEmployee(emp);
-		m.addAttribute("msg", "Successfully Added");
-		return "redirect:/empList";
+	public String saveEmp(@ModelAttribute Employee emp) {
+		employeeService.saveEmployee(emp);
+		return "redirect:/addEmp";
 	}
 	
 	@GetMapping("/editEmp/{id}")
 	public String editEmpById(@PathVariable int id, Model m) {
-		Employee emp = empServ.getEmployeeById(id);
-		m.addAttribute("emp", emp);
-		return "edit_emp.html";
+		Employee emp = employeeService.getEmployeeById(id);
+		if(emp != null) {
+			m.addAttribute("emp", emp);
+			return "edit_emp";
+		}
+		m.addAttribute("msg", "Sorry Employee doesn't exist");
+		return "error_page";
 	}
 	
 	@PostMapping("/editEmp/updateEmp")
 	public String updateEmp(@ModelAttribute Employee emp) {
-		empServ.saveEmployee(emp);
+		employeeService.saveEmployee(emp);
 		return "redirect:/empList";
 	}
 	@GetMapping("/deleteEmp/{id}")
 	public String deleteEmpById(@PathVariable int id, Model m) {
-		empServ.deleteEmployeeById(id);
-		return "redirect:/empList";
+		if(employeeService.deleteEmployeeById(id)) {
+			return "redirect:/empList";
+		}
+		m.addAttribute("msg", "Already Deleted");
+		return "error_page";
 	}
 }

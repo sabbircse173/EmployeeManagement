@@ -1,41 +1,46 @@
 package com.becoder.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.becoder.entity.Department;
-import com.becoder.repository.DepartmentRepo;
+import com.becoder.repository.DepartmentRepository;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
 	@Autowired
-	private DepartmentRepo deptrepo;
+	private DepartmentRepository departmentRepository;
 	@Override
-	public Department SaveDepartment(Department department) {
-		return deptrepo.save(department);
+	public Department saveDepartment(Department department) {
+		return departmentRepository.save(department);
 	}
 
 	@Override
 	public List<Department> getAllDepartment() {
-		return deptrepo.findAll();
+		return departmentRepository.findAll();
 	}
 
 	@Override
 	public Department getDepartmentById(int id) {
-		return deptrepo.findById(id).get();
+		Optional<Department> departmentOptional = departmentRepository.findById(id);
+		if(departmentOptional.isPresent()) {
+			return departmentOptional.get();
+		}
+		return null;
 	}
 
 	@Override
-	public String DeleteDeptById(int id) {
-		Department dept = deptrepo.findById(id).get();
-		if(dept != null) {
-			deptrepo.delete(dept);
-			System.out.println("Deleted successfully");
+	public boolean deleteDepartmentById(int id) {
+		Optional<Department> departmentOptional = departmentRepository.findById(id);
+		if(departmentOptional.isPresent()) {
+			departmentRepository.deleteById(id);
+			return true;
 		}
-		return "sorry, something went wrong, can't be deleted";
+		return false;
 	}
 
 }
