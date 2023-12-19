@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base :: layout(~{::title}, ~{::section})}">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Add Department</title>
+
+</head>
+<body>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+					<div class="card">
+						<div class="card-header text-center">
+							<p class="fs-4">Add Department</p>
+							<p th:if="${msg}" th:text="${msg}" style="color: green;"></p>
+						</div>
+						<div class="card-body">
+							<form action="saveDept" method="POST">
+								<label for="name">Name:</label> <input type="text" id="name"
+									name="name" required> <br> <label 
+									for="description">Description:</label>
+								<textarea id="description" name="description" style="width:300px;" required></textarea>
+								<br> <input type="submit" value="Submit">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

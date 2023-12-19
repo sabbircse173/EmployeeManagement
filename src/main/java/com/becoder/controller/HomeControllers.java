@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.becoder.entity.Department;
 import com.becoder.entity.Employee;
@@ -27,6 +28,18 @@ public class HomeControllers {
 	public void depts(Model m) {
 		List<Department> depts = departmentService.getAllDepartment();
 		m.addAttribute("depts", depts);
+	}
+	
+	@GetMapping("/searchByDepartment")
+	public String searchByDepartment(@RequestParam String department, Model m) {
+		List<Employee> empList = employeeService.getAllEmployeeByDept(department);
+		if(empList.isEmpty()) {
+			m.addAttribute("msg", 
+					"Sorry, there are no employees with that department name.");
+			return "error_page";
+		}
+		m.addAttribute("empList", empList);
+		return "search_page";
 	}
 	
 	@GetMapping("/")

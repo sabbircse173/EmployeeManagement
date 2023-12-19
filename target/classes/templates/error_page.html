@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base :: layout(~{::title}, ~{::section})}">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Error Page</title>
+</head>
+<body>
+	<section>
+		<h2 th:if="${msg}" th:text="${msg}" style="color:red; text-align:center;margin:200px;"></h2>
+	</section>
+</body>
+</html>
