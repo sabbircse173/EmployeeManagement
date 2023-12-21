@@ -1,5 +1,9 @@
 package com.becoder.entity;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,8 +18,10 @@ public class Employee {
 	private String department;
 	private String gender;
 	private String address;
-	private String birthdate;
-	private String joiningdate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date birthdate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date joiningdate;
 	
 	
 	public int getId() {
@@ -48,16 +54,16 @@ public class Employee {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getBirthdate() {
+	public Date getBirthdate() {
 		return birthdate;
 	}
-	public void setBirthdate(String birthdate) {
+	public void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
 	}
-	public String getJoiningdate() {
+	public Date getJoiningdate() {
 		return joiningdate;
 	}
-	public void setJoiningdate(String joiningdate) {
+	public void setJoiningdate(Date joiningdate) {
 		this.joiningdate = joiningdate;
 	}
 	
@@ -66,8 +72,8 @@ public class Employee {
 	public Employee() {
 		super();
 	}
-	public Employee(int id, String name, String department, String gender, String address, String birthdate,
-			String joiningdate) {
+	public Employee(int id, String name, String department, String gender, String address, Date birthdate,
+			Date joiningdate) {
 		super();
 		this.id = id;
 		this.name = name;

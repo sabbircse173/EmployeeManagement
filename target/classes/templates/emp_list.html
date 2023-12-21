@@ -33,8 +33,8 @@
 										<td>[[${x.department}]]</td>
 										<td>[[${x.gender}]]</td>
 										<td>[[${x.address}]]</td>
-										<td>[[${x.birthdate}]]</td>
-										<td>[[${x.joiningdate}]]</td>
+										<td style="width:100px;">[[${#dates.format(x.birthdate, 'dd-MM-yyyy')}]]</td>
+										<td th:text="${#dates.format(x.joiningdate, 'dd-MM-yyyy')}"></td>
 										<td>
 										   <a th:href="@{'editEmp/' + ${x.id}}"
 											   class="btn btn-sm btn-primary">Edit</a> 
