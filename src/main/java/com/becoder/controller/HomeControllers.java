@@ -46,6 +46,7 @@ public class HomeControllers {
 		}
 		String optimalStr = search_str.substring(lower_bound, upper_bound + 1);
 		List<Employee> empList = employeeService.getAllEmployeeBySearch(optimalStr);
+		
 		if(empList.isEmpty()) {
 			m.addAttribute("msg", 
 					"Sorry, Employees not found.");
