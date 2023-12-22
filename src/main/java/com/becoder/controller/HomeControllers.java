@@ -30,12 +30,25 @@ public class HomeControllers {
 		m.addAttribute("depts", depts);
 	}
 	
-	@GetMapping("/searchByDepartment")
-	public String searchByDepartment(@RequestParam String department, Model m) {
-		List<Employee> empList = employeeService.getAllEmployeeByDept(department);
+	@GetMapping("/searchByAnything")
+	public String searchByAnything(@RequestParam String search_str, Model m) {
+		int lower_bound = 0, upper_bound = search_str.length() - 1;
+		if(search_str.charAt(0) == ' ') {
+			while(search_str.charAt(lower_bound) == ' ') {
+				lower_bound++;
+			}
+		}
+		
+		if(search_str.charAt(upper_bound) == ' ') {
+			while(search_str.charAt(upper_bound) == ' ') {
+				upper_bound--;
+			}
+		}
+		String optimalStr = search_str.substring(lower_bound, upper_bound + 1);
+		List<Employee> empList = employeeService.getAllEmployeeBySearch(optimalStr);
 		if(empList.isEmpty()) {
 			m.addAttribute("msg", 
-					"Sorry, there are no employees with that department name.");
+					"Sorry, Employees not found.");
 			return "error_page";
 		}
 		m.addAttribute("empList", empList);
@@ -74,6 +87,7 @@ public class HomeControllers {
 	@PostMapping("/saveDept")
 	public String saveDept(@ModelAttribute Department dept, Model m) {
 		departmentService.saveDepartment(dept);
+		
 		return "redirect:/addDept";
 	}
 	
@@ -108,7 +122,7 @@ public class HomeControllers {
 	
 	
 	@PostMapping("/saveEmp")
-	public String saveEmp(@ModelAttribute Employee emp) {
+	public String saveEmp(@ModelAttribute Employee emp, Model m) {
 		employeeService.saveEmployee(emp);
 		return "redirect:/addEmp";
 	}

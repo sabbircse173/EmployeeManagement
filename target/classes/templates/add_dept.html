@@ -15,14 +15,17 @@
 					<div class="card">
 						<div class="card-header text-center">
 							<p class="fs-4">Add Department</p>
-							<p th:if="${msg}" th:text="${msg}" style="color: green;"></p>
+							<div th:if="${msg}" class="success-message">
+								<p th:text="${msg}"></p>
+							</div>
 						</div>
 						<div class="card-body">
 							<form action="saveDept" method="POST">
 								<label for="name">Name:</label> <input type="text" id="name"
-									name="name" required> <br> <label 
+									name="name" required> <br> <label
 									for="description">Description:</label>
-								<textarea id="description" name="description" style="width:300px;" required></textarea>
+								<textarea id="description" name="description"
+									style="width: 300px;" required></textarea>
 								<br> <input type="submit" value="Submit">
 							</form>
 						</div>

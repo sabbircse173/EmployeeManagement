@@ -45,8 +45,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 	}
 
 	@Override
-	public List<Employee> getAllEmployeeByDept(String department) {
-		return employeeRepository.getAllEmployeeBySearch(department);
+	public List<Employee> getAllEmployeeBySearch(String search_str) {
+		return employeeRepository.getAllEmployeesBySearch(search_str);
 	}
 
 }
