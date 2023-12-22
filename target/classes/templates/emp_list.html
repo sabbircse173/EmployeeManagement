@@ -11,7 +11,7 @@
 			<div class="row">
 				<div class="col-md-12 offset-md-0.5">
 					<div class="card-header text-center fs-4">
-						<p>Employee Details</p> 
+						<p>Employee Details</p>
 						<div class="card-body">
 							<table class="table table-success table-striped fs-5">
 								<thead>
@@ -33,14 +33,13 @@
 										<td>[[${x.department}]]</td>
 										<td>[[${x.gender}]]</td>
 										<td>[[${x.address}]]</td>
-										<td style="width:100px;">[[${#dates.format(x.birthdate, 'dd-MM-yyyy')}]]</td>
+										<td style="width: 100px;">[[${#dates.format(x.birthdate,
+											'dd-MM-yyyy')}]]</td>
 										<td th:text="${#dates.format(x.joiningdate, 'dd-MM-yyyy')}"></td>
-										<td>
-										   <a th:href="@{'editEmp/' + ${x.id}}"
-											   class="btn btn-sm btn-primary">Edit</a> 
-										   <a th:href="@{'deleteEmp/' + ${x.id}}"
-											class="btn btn-sm btn-danger">Delete</a>
-										</td>
+										<td><a th:href="@{'editEmp/' + ${x.id}}"
+											class="btn btn-sm btn-primary">Edit</a> <a
+											th:href="@{'deleteEmp/' + ${x.id}}"
+											class="btn btn-sm btn-danger">Delete</a></td>
 									</tr>
 								</tbody>
 							</table>
