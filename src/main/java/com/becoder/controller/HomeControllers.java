@@ -32,20 +32,14 @@ public class HomeControllers {
 	
 	@GetMapping("/searchByAnything")
 	public String searchByAnything(@RequestParam String search_str, Model m) {
-		int lower_bound = 0, upper_bound = search_str.length() - 1;
-		if(search_str.charAt(0) == ' ') {
-			while(search_str.charAt(lower_bound) == ' ') {
-				lower_bound++;
-			}
-		}
+		String trimmedString = search_str.trim().toLowerCase();
+		List<Employee> empList;
 		
-		if(search_str.charAt(upper_bound) == ' ') {
-			while(search_str.charAt(upper_bound) == ' ') {
-				upper_bound--;
-			}
+		if(trimmedString.equals("female") || trimmedString.equals("male")) {
+			empList = employeeService.getAllEmployeeByGender(trimmedString);
+		}else {
+			empList = employeeService.getAllEmployeeBySearch(trimmedString);
 		}
-		String optimalStr = search_str.substring(lower_bound, upper_bound + 1);
-		List<Employee> empList = employeeService.getAllEmployeeBySearch(optimalStr);
 		
 		if(empList.isEmpty()) {
 			m.addAttribute("msg", 
@@ -53,7 +47,7 @@ public class HomeControllers {
 			return "error_page";
 		}
 		m.addAttribute("empList", empList);
-		return "search_page";
+		return "emp_list";
 	}
 	
 	@GetMapping("/")

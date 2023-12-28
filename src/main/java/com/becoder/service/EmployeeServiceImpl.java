@@ -49,4 +49,9 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return employeeRepository.getAllEmployeesBySearch(search_str);
 	}
 
+	@Override
+	public List<Employee> getAllEmployeeByGender(String gender) {
+		return employeeRepository.findByGender(gender);
+	}
+
 }
