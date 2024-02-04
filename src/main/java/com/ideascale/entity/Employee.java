@@ -1,22 +1,25 @@
-package com.becoder.entity;
+package com.ideascale.entity;
 
 import java.util.Date;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 @Entity
 public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@NotNull
+	@Pattern(regexp = "^[^\\s]+$", message = "WhiteSpace not allowed")
 	private String name;
-	private String department;
+	@ManyToOne
+	private Department department;
 	private String gender;
+	@NotNull
+	@Pattern(regexp = "^[^\\s]+$", message = "WhiteSpace not allowed")
 	private String address;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthdate;
@@ -36,10 +39,10 @@ public class Employee {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDepartment() {
+	public Department getDepartment() {
 		return department;
 	}
-	public void setDepartment(String department) {
+	public void setDepartment(Department department) {
 		this.department = department;
 	}
 	public String getGender() {
@@ -72,8 +75,8 @@ public class Employee {
 	public Employee() {
 		super();
 	}
-	public Employee(int id, String name, String department, String gender, String address, Date birthdate,
-			Date joiningdate) {
+	public Employee(int id, String name, Department department, String gender, String address, Date birthdate,
+					Date joiningdate) {
 		super();
 		this.id = id;
 		this.name = name;

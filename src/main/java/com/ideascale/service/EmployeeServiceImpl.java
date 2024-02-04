@@ -1,4 +1,4 @@
-package com.becoder.service;
+package com.ideascale.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.becoder.entity.Employee;
-import com.becoder.repository.EmployeeRepository;
+import com.ideascale.entity.Employee;
+import com.ideascale.repository.EmployeeRepository;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{

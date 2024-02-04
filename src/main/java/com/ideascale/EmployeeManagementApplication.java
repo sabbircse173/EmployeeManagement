@@ -1,4 +1,4 @@
-package com.becoder;
+package com.ideascale;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,7 +1,10 @@
-package com.becoder.controller;
+package com.ideascale.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.becoder.entity.Department;
-import com.becoder.entity.Employee;
-import com.becoder.service.DepartmentService;
-import com.becoder.service.EmployeeService;
+import com.ideascale.entity.Department;
+import com.ideascale.entity.Employee;
+import com.ideascale.service.DepartmentService;
+import com.ideascale.service.EmployeeService;
 
 @Controller
 public class HomeControllers {
@@ -25,9 +28,9 @@ public class HomeControllers {
 	private EmployeeService employeeService;
 	
 	@ModelAttribute
-	public void depts(Model m) {
+	public void departments(Model model) {
 		List<Department> depts = departmentService.getAllDepartment();
-		m.addAttribute("depts", depts);
+		model.addAttribute("depts", depts);
 	}
 	
 	@GetMapping("/searchByAnything")
@@ -43,7 +46,7 @@ public class HomeControllers {
 		
 		if(empList.isEmpty()) {
 			m.addAttribute("msg", 
-					"Sorry, Employees not found.");
+					"Sorry, Employees not found. Please go back to the page.");
 			return "error_page";
 		}
 		m.addAttribute("empList", empList);
@@ -81,11 +84,26 @@ public class HomeControllers {
 	
 	@PostMapping("/saveDept")
 	public String saveDept(@ModelAttribute Department dept, Model m) {
-		departmentService.saveDepartment(dept);
-		
-		return "redirect:/addDept";
+		try {
+			departmentService.saveDepartment(dept);
+			return "redirect:/addDept";
+		}  catch (Exception e) {
+			m.addAttribute("msg", "An unexpected error occurred. Please go back to the page.");
+			return "error_page";
+		}
+
+		/// prothom Catch
+//
+//		catch (ConstraintViolationException ex) {
+//			List<String> errors = new ArrayList<>();
+//			for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
+//				errors.add(violation.getMessage());
+//			}
+//			m.addAttribute("errors", errors);  // Add errors to model for display
+//			return "add_dept";  // Redirect to addDept view to display errors
+//		}
 	}
-	
+
 	
 	@GetMapping("/editDept/{id}")
 	public String editDeptById(@PathVariable int id, Model m) {
@@ -94,7 +112,7 @@ public class HomeControllers {
 			m.addAttribute("dept", dept);
 			return "edit_dept";
 		}
-		m.addAttribute("msg", "Sorry Department doesn't exist");
+		m.addAttribute("msg", "Sorry Department doesn't exist. Please go back to the page");
 		return "error_page";
 	}
 	
@@ -103,7 +121,7 @@ public class HomeControllers {
 		if(departmentService.deleteDepartmentById(id)) {
 			return "redirect:/deptList";
 		}
-		m.addAttribute("msg", "Already Deleted");
+		m.addAttribute("msg", "Already Deleted. Please go back to the page");
 		return "error_page";
 	}
 	
@@ -118,8 +136,13 @@ public class HomeControllers {
 	
 	@PostMapping("/saveEmp")
 	public String saveEmp(@ModelAttribute Employee emp, Model m) {
-		employeeService.saveEmployee(emp);
-		return "redirect:/addEmp";
+		try{
+			employeeService.saveEmployee(emp);
+			return "redirect:/addEmp";
+		} catch (Exception e) {
+			m.addAttribute("msg", "An unexpected error occurred. Please go back to the page.");
+			return "error_page";
+		}
 	}
 	
 	@GetMapping("/editEmp/{id}")
@@ -129,7 +152,7 @@ public class HomeControllers {
 			m.addAttribute("emp", emp);
 			return "edit_emp";
 		}
-		m.addAttribute("msg", "Sorry Employee doesn't exist");
+		m.addAttribute("msg", "Sorry Employee doesn't exist. Please go back to the page");
 		return "error_page";
 	}
 	
@@ -143,7 +166,7 @@ public class HomeControllers {
 		if(employeeService.deleteEmployeeById(id)) {
 			return "redirect:/empList";
 		}
-		m.addAttribute("msg", "Already Deleted");
+		m.addAttribute("msg", "Already Deleted. Please go back to the page");
 		return "error_page";
 	}
 }

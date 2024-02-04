@@ -21,8 +21,8 @@
 									name="name" th:value="${emp.name}" required> <br>
 								<label for="department">Select a department: </label> <select
 									id="department" name="department">
-									<option th:each="x:${depts}" th:value="${x.name}"
-										th:text="${x.name}" th:selected="${x.name eq emp.department}"></option>
+									<option th:each="x:${depts}" th:value="${x.id}"
+										th:text="${x.name}" th:selected="${x.id eq emp.department.id}"></option>
 								</select> <br> <label for="gender">Gender:</label> <select
 									id="gender" name="gender">
 									<option value="Male" th:selected="${'Male' eq emp.gender}">Male</option>

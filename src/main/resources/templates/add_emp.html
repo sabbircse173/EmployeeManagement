@@ -22,7 +22,7 @@
 								<label for="name">Name:</label><input type="text" id="name"
 									name="name" required> <br> <label for="department">Select
 									a department: </label> <select id="department" name="department">
-									<option th:each="x:${depts}" th:value="${x.name}"
+									<option th:each="x:${depts}" th:value="${x.id}"
 										th:text="${x.name}"></option>
 								</select> <br> <label for="gender">Gender:</label> <select
 									id="gender" name="gender">

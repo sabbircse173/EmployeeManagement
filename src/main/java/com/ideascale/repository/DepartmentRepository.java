@@ -1,8 +1,8 @@
-package com.becoder.repository;
+package com.ideascale.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.becoder.entity.Department;
+import com.ideascale.entity.Department;
 
 public interface DepartmentRepository extends JpaRepository<Department, Integer>{
 

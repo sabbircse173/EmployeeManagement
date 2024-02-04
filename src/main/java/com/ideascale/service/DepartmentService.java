@@ -1,7 +1,7 @@
-package com.becoder.service;
+package com.ideascale.service;
 
 import java.util.List;
-import com.becoder.entity.Department;
+import com.ideascale.entity.Department;
 
 public interface DepartmentService {
 	public Department saveDepartment(Department department);
