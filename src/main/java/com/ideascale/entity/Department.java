@@ -13,10 +13,8 @@ public class Department {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@NotNull
-	@Pattern(regexp = "^[^\\s]+$", message = "Name must not contain whitespace ")
 	private String name;
 	@NotNull
-	@Pattern(regexp = "^[^\\s]+$", message = "Name must not contain whitespace")
 	private String description;
 
 	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL)

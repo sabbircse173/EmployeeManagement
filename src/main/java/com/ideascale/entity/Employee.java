@@ -13,13 +13,11 @@ public class Employee {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@NotNull
-	@Pattern(regexp = "^[^\\s]+$", message = "WhiteSpace not allowed")
 	private String name;
 	@ManyToOne
 	private Department department;
 	private String gender;
 	@NotNull
-	@Pattern(regexp = "^[^\\s]+$", message = "WhiteSpace not allowed")
 	private String address;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthdate;
