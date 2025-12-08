@@ -1,23 +1,25 @@
 package com.ideascale.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ideascale.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import com.ideascale.entity.Department;
 import com.ideascale.repository.DepartmentRepository;
 
+import jakarta.annotation.Nonnull;
+
+@RequiredArgsConstructor
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
-	@Autowired
-	private DepartmentRepository departmentRepository;
+	@Nonnull private final DepartmentRepository departmentRepository;
 	@Override
-	public Department saveDepartment(Department department) {
-		return departmentRepository.save(department);
-	}
+	public void saveDepartment(Department department) {
+        departmentRepository.save(department);
+    }
 
 	@Override
 	public List<Department> getAllDepartment() {
@@ -26,21 +28,16 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	public Department getDepartmentById(int id) {
-		Optional<Department> departmentOptional = departmentRepository.findById(id);
-		if(departmentOptional.isPresent()) {
-			return departmentOptional.get();
-		}
-		return null;
-	}
+		return departmentRepository.findById(id).orElse(null);
+    }
 
 	@Override
-	public boolean deleteDepartmentById(int id) {
-		Optional<Department> departmentOptional = departmentRepository.findById(id);
-		if(departmentOptional.isPresent()) {
-			departmentRepository.deleteById(id);
-			return true;
-		}
-		return false;
-	}
+	public void deleteDepartmentById(int id) {
+        Department department = departmentRepository.findById(id).orElse(null);
+        if (department == null) {
+            throw new NotFoundException("Department Not Found by ID: " + id);
+        }
+        departmentRepository.delete(department);
+    }
 
 }

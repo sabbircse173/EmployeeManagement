@@ -4,11 +4,19 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
+
+// Didn't use lombok intentionally here.
+@Table(name = "department")
 @Entity
-public class Department {
+public class Department implements Serializable {
+
+    @Serial
+	private static final long serialVersionUID = 8748619341654579468L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

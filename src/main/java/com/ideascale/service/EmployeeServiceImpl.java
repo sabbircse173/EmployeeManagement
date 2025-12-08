@@ -3,17 +3,20 @@ package com.ideascale.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ideascale.data.Gender;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import com.ideascale.entity.Employee;
 import com.ideascale.repository.EmployeeRepository;
 
+import jakarta.annotation.Nonnull;
+
+@RequiredArgsConstructor
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
 
-	@Autowired
-	private EmployeeRepository employeeRepository;
+	@Nonnull private final EmployeeRepository employeeRepository;
 	
 	@Override
 	public Employee saveEmployee(Employee emp) {
@@ -27,12 +30,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 
 	@Override
 	public Employee getEmployeeById(int id) {
-		Optional<Employee> employeeOptional = employeeRepository.findById(id);
-		if(employeeOptional.isPresent()) {
-			return employeeOptional.get();
-		}
-		return null;
-	}
+		return employeeRepository.findById(id).orElse(null);
+    }
 
 	@Override
 	public boolean deleteEmployeeById(int id) {
@@ -45,13 +44,18 @@ public class EmployeeServiceImpl implements EmployeeService{
 	}
 
 	@Override
-	public List<Employee> getAllEmployeeBySearch(String search_str) {
-		return employeeRepository.getAllEmployeesBySearch(search_str);
+	public List<Employee> getAllEmployeeByTerm(String search_str) {
+		return employeeRepository.getAllEmployeesByTerm(search_str);
 	}
 
 	@Override
-	public List<Employee> getAllEmployeeByGender(String gender) {
+	public List<Employee> getAllEmployeeByGender(Gender gender) {
 		return employeeRepository.findByGender(gender);
+	}
+
+	@Override
+	public List<Employee> getEmployeesByName(String name) {
+		return employeeRepository.getEmployeesByName(name);
 	}
 
 }
