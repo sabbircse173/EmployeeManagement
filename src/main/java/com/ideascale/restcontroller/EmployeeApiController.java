@@ -1,6 +1,6 @@
 package com.ideascale.restcontroller;
 
-import com.ideascale.apiservice.EmployeeApiServiceFacade;
+import com.ideascale.facade.EmployeeApiServiceFacade;
 import com.ideascale.constants.Path;
 import com.ideascale.data.EmployeeData;
 import jakarta.annotation.Nonnull;

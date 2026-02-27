@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	th:fragment="layout(title, content)">
 
 <head>
@@ -52,6 +53,16 @@ label, input, textarea, select {
 						aria-label="Search" name="searchTerm" required>
 					<button class="btn btn-outline-success" type="submit">Search</button>
 				</form>
+				<div class="d-flex align-items-center ms-3" sec:authorize="isAuthenticated()">
+					<span class="text-light me-3">
+						<span sec:authentication="name"></span>
+						<span class="badge bg-secondary ms-1" sec:authorize="hasRole('ADMIN')">Admin</span>
+						<span class="badge bg-info ms-1" sec:authorize="hasRole('USER') and !hasRole('ADMIN')">User</span>
+					</span>
+					<form th:action="@{/logout}" method="post" class="d-inline">
+						<button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</nav>

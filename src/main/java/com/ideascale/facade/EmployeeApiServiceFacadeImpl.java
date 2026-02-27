@@ -1,7 +1,6 @@
-package com.ideascale.apiservice;
+package com.ideascale.facade;
 
 import com.ideascale.data.EmployeeData;
-import com.ideascale.data.Gender;
 import com.ideascale.entity.Employee;
 import com.ideascale.service.EmployeeService;
 import lombok.RequiredArgsConstructor;

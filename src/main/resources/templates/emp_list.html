@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	th:replace="~{base::layout(~{::title}, ~{::section})}">
 <head>
 <meta charset="ISO-8859-1">
@@ -36,10 +37,13 @@
 										<td style="width: 100px;">[[${#dates.format(x.birthdate,
 											'dd-MM-yyyy')}]]</td>
 										<td th:text="${#dates.format(x.joiningdate, 'dd-MM-yyyy')}"></td>
-										<td><a th:href="@{'editEmp/' + ${x.id}}"
-											class="btn btn-sm btn-primary">Edit</a> <a
-											th:href="@{'deleteEmp/' + ${x.id}}"
-											class="btn btn-sm btn-danger">Delete</a></td>
+										<td>
+											<a th:href="@{'editEmp/' + ${x.id}}"
+											   class="btn btn-sm btn-primary">Edit</a>
+											<a th:href="@{'deleteEmp/' + ${x.id}}"
+											   class="btn btn-sm btn-danger"
+											   sec:authorize="hasRole('ADMIN')">Delete</a>
+									</td>
 									</tr>
 								</tbody>
 							</table>
